@@ -59,13 +59,13 @@ class SearchResultList extends StatelessWidget {
   int pageIndex;
   int pageSize;
   Future<void> onPullUp(BuildContext context) async {
-    final bloc = BlocProvider.of<PaginationBloc>(context);
+    final bloc = BlocProvider.of<SearchBloc>(context);
     bloc.add(CheckIfNeedMoreDataEvent(index: pageIndex + 1));
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<PaginationBloc>(context);
+    final bloc = BlocProvider.of<SearchBloc>(context);
     List<Widget> widgets = bloc.pokemonTags.map((p) {
       return PokemonCard(
         pokemonTag: p,
@@ -188,7 +188,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildPokemonResult(BuildContext context) {
-    final bloc = BlocProvider.of<PaginationBloc>(context);
+    final bloc = BlocProvider.of<SearchBloc>(context);
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -246,20 +246,20 @@ class _SearchPageState extends State<SearchPage> {
     return Container(
       color: Color(0xFFC4ECFA),
       child: BlocProvider(
-        create: (context) => PaginationBloc()..add(const LoadPageEvent()),
-        child: BlocBuilder<PaginationBloc, PaginationState>(
+        create: (context) => SearchBloc()..add(LoadPageEvent()),
+        child: BlocBuilder<SearchBloc, SearchState>(
           builder: (context, state) {
-            if (state is PaginationLoadingState) {
+            if (state is LoadingState) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is PaginationLoadedState) {
+            } else if (state is LoadedState) {
               return _buildPokemonResult(context);
-            } else if (state is PaginationErrorState) {
+            } else if (state is ErrorState) {
               return errorDialog(
                 size: 20,
                 onPressed: () {
-                  BlocProvider.of<PaginationBloc>(context)
+                  BlocProvider.of<SearchBloc>(context)
                     ..pageNumber = 0
-                    ..add(const LoadPageEvent());
+                    ..add(LoadPageEvent());
                 },
               );
             } else {
