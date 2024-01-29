@@ -106,9 +106,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
               if (snapshot.hasData) {
                 return Container(
                   width: double.infinity,
-                  color: Color(0xFFC4ECFA),
+                  color: const Color(0xFFC4ECFA),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Column(
                       children: [
                         AnimatedPokemonImageCard(pokemon: snapshot.data),

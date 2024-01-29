@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/widgets/pokemon_icon.dart';
 
-class HistoryPage extends StatefulWidget {
-  HistoryPage({
-    super.key,
-    required this.pokemonTeams,
-  });
-  List<List<PokemonTag>> pokemonTeams;
-
-  @override
-  State<HistoryPage> createState() => _HistoryPageState();
-}
-
 class TeamRow extends StatelessWidget {
   TeamRow({
     required this.pokemonTeam,
@@ -26,19 +15,19 @@ class TeamRow extends StatelessWidget {
             ))
         .toList();
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(color: Colors.grey, spreadRadius: 1),
             ],
           ),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: Row(
                 children: widgets,
               ),
@@ -48,10 +37,16 @@ class TeamRow extends StatelessWidget {
   }
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class HistoryPage extends StatelessWidget {
+  const HistoryPage({
+    super.key,
+    required this.pokemonTeams,
+  });
+  final List<List<PokemonTag>> pokemonTeams;
+
   @override
   Widget build(BuildContext context) {
-    var resultWidget = widget.pokemonTeams.length == 0
+    var resultWidget = pokemonTeams.length == 0
         ? Center(
             child: Text(
               "No team found.",
@@ -62,7 +57,7 @@ class _HistoryPageState extends State<HistoryPage> {
             scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: widget.pokemonTeams
+              children: pokemonTeams
                   .map((list) => TeamRow(pokemonTeam: list))
                   .toList(),
             ),
@@ -70,11 +65,11 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return SafeArea(
       child: Container(
-        color: Color(0xFFC4ECFA),
+        color: const Color(0xFFC4ECFA),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: resultWidget,
         ),
       ),
