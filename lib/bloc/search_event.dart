@@ -1,16 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-abstract class PaginationState extends Equatable {
+abstract class SearchState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class PaginationInitialState extends PaginationState {
-  PaginationInitialState();
-}
+class InitialState extends SearchState {}
 
-class PaginationLoadedState extends PaginationState {}
+class LoadedState extends SearchState {}
 
-class PaginationLoadingState extends PaginationState {}
+class LoadingState extends SearchState {}
 
-class PaginationErrorState extends PaginationState {}
+class ErrorState extends SearchState {}

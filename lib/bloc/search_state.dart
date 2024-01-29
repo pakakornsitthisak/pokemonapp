@@ -1,17 +1,15 @@
 import 'package:equatable/equatable.dart';
 
-abstract class PaginationEvent extends Equatable {
-  const PaginationEvent();
+abstract class SearchEvent extends Equatable {
+  const SearchEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class LoadPageEvent extends PaginationEvent {
-  const LoadPageEvent();
-}
+class LoadPageEvent extends SearchEvent {}
 
-class CheckIfNeedMoreDataEvent extends PaginationEvent {
+class CheckIfNeedMoreDataEvent extends SearchEvent {
   final int index;
   const CheckIfNeedMoreDataEvent({required this.index});
 
