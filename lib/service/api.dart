@@ -3,7 +3,6 @@ import 'package:skinxtest/constants/api.dart';
 
 class Api {
   final dio = createDio();
-  final tokenDio = Dio(BaseOptions(baseUrl: ApiConstants.baseUrl));
 
   Api._internal();
 
@@ -64,15 +63,6 @@ class AppInterceptors extends Interceptor {
     }
 
     return handler.next(err);
-  }
-}
-
-class BadRequestException extends DioError {
-  BadRequestException(RequestOptions r) : super(requestOptions: r);
-
-  @override
-  String toString() {
-    return 'Invalid request';
   }
 }
 
