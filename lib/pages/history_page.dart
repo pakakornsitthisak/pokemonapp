@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:skinxtest/models/pokemon_tag.dart';
+import 'package:skinxtest/models/pokemon_card.dart';
 import 'package:skinxtest/widgets/pokemon_icon.dart';
 
 class TeamRow extends StatelessWidget {
-  TeamRow({
+  const TeamRow({
     required this.pokemonTeam,
   });
-  List<PokemonTag> pokemonTeam;
+  final List<PokemonCard> pokemonTeam;
   @override
   Widget build(BuildContext context) {
     var widgets = pokemonTeam
@@ -42,7 +42,7 @@ class HistoryPage extends StatelessWidget {
     super.key,
     required this.pokemonTeams,
   });
-  final List<List<PokemonTag>> pokemonTeams;
+  final List<List<PokemonCard>> pokemonTeams;
 
   @override
   Widget build(BuildContext context) {
