@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skinxtest/models/pokemon.dart';
-import 'package:skinxtest/models/pokemon_card.dart';
+import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/service/pokemon_service.dart';
 import 'package:skinxtest/widgets/animated_pokemon_image_card.dart';
 
@@ -13,7 +13,7 @@ class PokemonName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Container(
         child: Row(
           children: [
@@ -79,7 +79,7 @@ class PokemonDetailPage extends StatefulWidget {
     super.key,
     required this.pokemon,
   });
-  final PokemonCard pokemon;
+  final PokemonTag pokemon;
 
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
@@ -119,7 +119,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                   ),
                 );
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }

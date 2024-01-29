@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:skinxtest/models/pokemon_card.dart';
+import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/widgets/pokemon_icon.dart';
 
 class TeamRow extends StatelessWidget {
   const TeamRow({
+    super.key,
     required this.pokemonTeam,
   });
-  final List<PokemonCard> pokemonTeam;
+
+  final List<PokemonTag> pokemonTeam;
+
   @override
   Widget build(BuildContext context) {
     var widgets = pokemonTeam
@@ -42,12 +45,12 @@ class HistoryPage extends StatelessWidget {
     super.key,
     required this.pokemonTeams,
   });
-  final List<List<PokemonCard>> pokemonTeams;
+  final List<List<PokemonTag>> pokemonTeams;
 
   @override
   Widget build(BuildContext context) {
-    var resultWidget = pokemonTeams.length == 0
-        ? Center(
+    var resultWidget = pokemonTeams.isEmpty
+        ? const Center(
             child: Text(
               "No team found.",
               style: TextStyle(fontSize: 30),
@@ -66,8 +69,6 @@ class HistoryPage extends StatelessWidget {
     return SafeArea(
       child: Container(
         color: const Color(0xFFC4ECFA),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: resultWidget,
