@@ -21,6 +21,7 @@ class SearchPage extends StatefulWidget {
 
 class SearchResultText extends StatelessWidget {
   SearchResultText({
+    super.key,
     required this.totalPokemonFound,
   });
   int totalPokemonFound;
@@ -92,6 +93,7 @@ class SearchResultList extends StatelessWidget {
 
 class SelectedPolemonsBar extends StatelessWidget {
   SelectedPolemonsBar({
+    super.key,
     required this.pokemons,
     required this.onAddTeam,
   });
@@ -169,12 +171,6 @@ class FormTeamButton extends StatelessWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<PokemonTag> _teamPokemons = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   List<PokemonTag> _pokemons = [];
   void _selectPokemon(PokemonTag pokemonTag) {
     setState(() {
@@ -191,7 +187,7 @@ class _SearchPageState extends State<SearchPage> {
     final bloc = BlocProvider.of<SearchBloc>(context);
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Column(children: [
           SearchResultText(totalPokemonFound: bloc.pokemonTags.length),
           SearchResultList(

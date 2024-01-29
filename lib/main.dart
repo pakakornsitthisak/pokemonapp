@@ -8,7 +8,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  List<List<PokemonTag>> _pokemonTeams = [];
+  final List<List<PokemonTag>> _pokemonTeams = [];
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
@@ -62,10 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: _currentPage == 0 ? Text('Pokemons') : Text('History'),
+        title:
+            _currentPage == 0 ? const Text('Pokemons') : const Text('History'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Center(child: _pages[_currentPage]),
       ),
       bottomNavigationBar: BottomNavigationBar(

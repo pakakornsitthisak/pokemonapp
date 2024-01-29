@@ -5,6 +5,7 @@ import 'package:skinxtest/pages/pokemon_detail_page.dart';
 
 class PokemonCard extends StatelessWidget {
   PokemonCard({
+    super.key,
     required this.pokemonTag,
     required this.onSelectPokemon,
     required this.isSelected,
@@ -21,7 +22,7 @@ class PokemonCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(vertical: 5),
               child: Text(name),
             ),
             Expanded(

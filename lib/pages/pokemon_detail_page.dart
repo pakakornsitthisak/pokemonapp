@@ -3,16 +3,17 @@ import 'package:skinxtest/models/pokemon.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/service/pokemon_service.dart';
 import 'package:skinxtest/widgets/animated_pokemon_image_card.dart';
-import 'package:skinxtest/widgets/pokemon_icon.dart';
-import 'package:skinxtest/widgets/pokemon_image_card.dart';
 
 class PokemonName extends StatelessWidget {
-  PokemonName({required this.name});
-  String name;
+  const PokemonName({
+    super.key,
+    required this.name,
+  });
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Container(
         child: Row(
           children: [
@@ -31,8 +32,10 @@ class PokemonName extends StatelessWidget {
 }
 
 class PokemonDetail extends StatelessWidget {
-  PokemonDetail({required this.pokemon});
-  Pokemon pokemon;
+  const PokemonDetail({
+    required this.pokemon,
+  });
+  final Pokemon pokemon;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class PokemonDetail extends StatelessWidget {
                 e.key,
                 style: TextStyle(fontSize: 25),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 e.value.toString(),
                 style: TextStyle(fontSize: 25),
@@ -72,22 +75,17 @@ class PokemonDetail extends StatelessWidget {
 }
 
 class PokemonDetailPage extends StatefulWidget {
-  PokemonDetailPage({
+  const PokemonDetailPage({
     super.key,
     required this.pokemon,
   });
-  PokemonTag pokemon;
+  final PokemonTag pokemon;
 
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
 }
 
 class _PokemonDetailPageState extends State<PokemonDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   _getData() async {
     return (await PokemonService().getPokemon(widget.pokemon.name))!;
   }
@@ -106,9 +104,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
               if (snapshot.hasData) {
                 return Container(
                   width: double.infinity,
-                  color: Color(0xFFC4ECFA),
+                  color: const Color(0xFFC4ECFA),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Column(
                       children: [
                         AnimatedPokemonImageCard(pokemon: snapshot.data),
@@ -121,7 +119,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                   ),
                 );
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
