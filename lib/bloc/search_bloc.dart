@@ -6,7 +6,7 @@ import 'package:skinxtest/service/pokemon_service.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   int pageNumber = 0;
-  final int pageSize = 10;
+  final int pageSize = 10000;
   List<PokemonTag> pokemonTags = [];
   final int nextPageTrigger = 3;
 
@@ -25,7 +25,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     });
 
     on<CheckIfNeedMoreDataEvent>((event, emit) async {
-      print("A");
       emit(LoadingState());
       if (pokemonTags.length >= pokemonTags.length - nextPageTrigger) {
         add(LoadPageEvent());
