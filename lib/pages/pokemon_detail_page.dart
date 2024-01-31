@@ -14,18 +14,16 @@ class PokemonName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Container(
-        child: Row(
-          children: [
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 40),
-              ),
+      child: Row(
+        children: [
+          FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              name,
+              style: TextStyle(fontSize: 40),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -33,6 +31,7 @@ class PokemonName extends StatelessWidget {
 
 class PokemonDetail extends StatelessWidget {
   const PokemonDetail({
+    super.key,
     required this.pokemon,
   });
   final Pokemon pokemon;
@@ -51,12 +50,12 @@ class PokemonDetail extends StatelessWidget {
             children: [
               Text(
                 e.key,
-                style: TextStyle(fontSize: 25),
+                style: const TextStyle(fontSize: 25),
               ),
               const Spacer(),
               Text(
                 e.value.toString(),
-                style: TextStyle(fontSize: 25),
+                style: const TextStyle(fontSize: 25),
               )
             ],
           ),
@@ -64,11 +63,9 @@ class PokemonDetail extends StatelessWidget {
         .toList();
 
     return Padding(
-      padding: EdgeInsets.all(10),
-      child: Container(
-        child: Column(
-          children: widgets,
-        ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: widgets,
       ),
     );
   }

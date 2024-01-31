@@ -13,9 +13,9 @@ class Api {
   static Dio createDio() {
     var dio = Dio(BaseOptions(
       baseUrl: ApiConstants.baseUrl,
-      receiveTimeout: Duration(seconds: 15000),
-      connectTimeout: Duration(seconds: 15000),
-      sendTimeout: Duration(seconds: 15000),
+      receiveTimeout: const Duration(seconds: 15000),
+      connectTimeout: const Duration(seconds: 15000),
+      sendTimeout: const Duration(seconds: 15000),
     ));
 
     dio.interceptors.addAll({
@@ -66,7 +66,7 @@ class AppInterceptors extends Interceptor {
   }
 }
 
-class InternalServerErrorException extends DioError {
+class InternalServerErrorException extends DioException {
   InternalServerErrorException(RequestOptions r) : super(requestOptions: r);
 
   @override
@@ -75,7 +75,7 @@ class InternalServerErrorException extends DioError {
   }
 }
 
-class ConflictException extends DioError {
+class ConflictException extends DioException {
   ConflictException(RequestOptions r) : super(requestOptions: r);
 
   @override
@@ -84,7 +84,7 @@ class ConflictException extends DioError {
   }
 }
 
-class UnauthorizedException extends DioError {
+class UnauthorizedException extends DioException {
   UnauthorizedException(RequestOptions r) : super(requestOptions: r);
 
   @override
@@ -93,7 +93,7 @@ class UnauthorizedException extends DioError {
   }
 }
 
-class NotFoundException extends DioError {
+class NotFoundException extends DioException {
   NotFoundException(RequestOptions r) : super(requestOptions: r);
 
   @override
@@ -102,7 +102,7 @@ class NotFoundException extends DioError {
   }
 }
 
-class NoInternetConnectionException extends DioError {
+class NoInternetConnectionException extends DioException {
   NoInternetConnectionException(RequestOptions r) : super(requestOptions: r);
 
   @override
@@ -111,11 +111,20 @@ class NoInternetConnectionException extends DioError {
   }
 }
 
-class DeadlineExceededException extends DioError {
+class DeadlineExceededException extends DioException {
   DeadlineExceededException(RequestOptions r) : super(requestOptions: r);
 
   @override
   String toString() {
     return 'The connection has timed out, please try again.';
+  }
+}
+
+class BadRequestException extends DioException {
+  BadRequestException(RequestOptions r) : super(requestOptions: r);
+
+  @override
+  String toString() {
+    return 'Bad request exception, please try again.';
   }
 }
