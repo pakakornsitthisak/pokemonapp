@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:skinxtest/models/pokemon.dart';
 
+// ignore: must_be_immutable
 class AnimatedPokemonImageCard extends StatefulWidget {
   AnimatedPokemonImageCard({
     super.key,
