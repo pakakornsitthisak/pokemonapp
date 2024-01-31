@@ -123,8 +123,8 @@ class SelectedPolemonsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = pokemons
-        .map((p) => PokemonIcon(
-              pokemonTag: p,
+        .map((pokemonTag) => PokemonIcon(
+              pokemonTag: pokemonTag,
             ))
         .toList();
     return Row(
@@ -193,8 +193,8 @@ class FormTeamButton extends StatelessWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<PokemonTag> _teamPokemons = [];
-  List<PokemonTag> _pokemons = [];
+  final List<PokemonTag> _teamPokemons = [];
+  final List<PokemonTag> _pokemons = [];
   void _selectPokemon(PokemonTag pokemonTag) {
     setState(() {
       if (_teamPokemons.length >= 6) {
@@ -222,9 +222,9 @@ class _SearchPageState extends State<SearchPage> {
             ),
             isLoading
                 ? const Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     child: Center(
-                      child: const CircularProgressIndicator(),
+                      child: CircularProgressIndicator(),
                     ),
                   )
                 : Container(),
