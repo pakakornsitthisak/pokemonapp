@@ -21,7 +21,7 @@ class _AnimatedPokemonImageCardState extends State<AnimatedPokemonImageCard> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
       setState(() => _index++);
     });
   }

@@ -3,6 +3,7 @@ import 'package:skinxtest/constants/api.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/pages/pokemon_detail_page.dart';
 
+// ignore: must_be_immutable
 class PokemonCard extends StatelessWidget {
   PokemonCard({
     super.key,
@@ -16,7 +17,8 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name = pokemonTag.getName();
-    return Center(
+    return Container(
+      height: 200,
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -35,11 +37,9 @@ class PokemonCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Container(
-                  child: Image.network(
-                    ApiConstants.imageUrl + pokemonTag.id.toString() + ".png",
-                    fit: BoxFit.fitWidth,
-                  ),
+                child: Image.network(
+                  "${ApiConstants.imageUrl}${pokemonTag.id}.png",
+                  fit: BoxFit.fitWidth,
                 ),
               ),
             ),

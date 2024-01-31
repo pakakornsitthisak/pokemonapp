@@ -1,18 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-abstract class SearchEvent extends Equatable {
-  const SearchEvent();
-
+abstract class SearchState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class LoadPageEvent extends SearchEvent {}
+class InitialState extends SearchState {}
 
-class CheckIfNeedMoreDataEvent extends SearchEvent {
-  final int index;
-  const CheckIfNeedMoreDataEvent({required this.index});
+class LoadedState extends SearchState {}
 
-  @override
-  List<Object?> get props => [index];
-}
+class LoadingState extends SearchState {}
+
+class ErrorState extends SearchState {}
