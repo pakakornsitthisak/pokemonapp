@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/widgets/pokemon_icon.dart';
 
+// ignore: must_be_immutable
 class HistoryPage extends StatefulWidget {
   HistoryPage({
     super.key,
@@ -13,16 +14,18 @@ class HistoryPage extends StatefulWidget {
   State<HistoryPage> createState() => _HistoryPageState();
 }
 
+// ignore: must_be_immutable
 class TeamRow extends StatelessWidget {
   TeamRow({
+    super.key,
     required this.pokemonTeam,
   });
   List<PokemonTag> pokemonTeam;
   @override
   Widget build(BuildContext context) {
     var widgets = pokemonTeam
-        .map((p) => PokemonIcon(
-              pokemonTag: p,
+        .map((pokemonTag) => PokemonIcon(
+              pokemonTag: pokemonTag,
             ))
         .toList();
     return Padding(
@@ -31,7 +34,7 @@ class TeamRow extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(color: Colors.grey, spreadRadius: 1),
             ],
           ),
@@ -52,7 +55,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     var resultWidget = widget.pokemonTeams.length == 0
-        ? Center(
+        ? const Center(
             child: Text(
               "No team found.",
               style: TextStyle(fontSize: 30),
@@ -70,11 +73,10 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return SafeArea(
       child: Container(
-        color: Color(0xFFC4ECFA),
-        width: MediaQuery.of(context).size.width,
+        color: const Color(0xFFC4ECFA),
         height: MediaQuery.of(context).size.height,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: resultWidget,
         ),
       ),

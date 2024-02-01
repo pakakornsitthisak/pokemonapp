@@ -3,35 +3,39 @@ import 'package:skinxtest/models/pokemon.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/service/pokemon_service.dart';
 import 'package:skinxtest/widgets/animated_pokemon_image_card.dart';
-import 'package:skinxtest/widgets/pokemon_icon.dart';
-import 'package:skinxtest/widgets/pokemon_image_card.dart';
 
+// ignore: must_be_immutable
 class PokemonName extends StatelessWidget {
-  PokemonName({required this.name});
+  PokemonName({
+    super.key,
+    required this.name,
+  });
   String name;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
-      child: Container(
-        child: Row(
-          children: [
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 40),
-              ),
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              name,
+              style: const TextStyle(fontSize: 40),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
+// ignore: must_be_immutable
 class PokemonDetail extends StatelessWidget {
-  PokemonDetail({required this.pokemon});
+  PokemonDetail({
+    super.key,
+    required this.pokemon,
+  });
   Pokemon pokemon;
 
   @override
@@ -71,6 +75,7 @@ class PokemonDetail extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class PokemonDetailPage extends StatefulWidget {
   PokemonDetailPage({
     super.key,
@@ -121,7 +126,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                   ),
                 );
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
