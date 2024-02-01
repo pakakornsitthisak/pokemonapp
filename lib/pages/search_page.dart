@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:refresh_loadmore/refresh_loadmore.dart';
 import 'package:skinxtest/bloc/search_bloc.dart';
-import 'package:skinxtest/bloc/search_event.dart';
 import 'package:skinxtest/bloc/search_state.dart';
+import 'package:skinxtest/bloc/search_event.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/widgets/pokemon_icon.dart';
 import 'package:skinxtest/widgets/pokemon_card.dart';
 
+// ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
   SearchPage({
     super.key,
@@ -19,8 +22,10 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
+// ignore: must_be_immutable
 class SearchResultText extends StatelessWidget {
   SearchResultText({
+    super.key,
     required this.totalPokemonFound,
   });
   int totalPokemonFound;
@@ -28,16 +33,16 @@ class SearchResultText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Center(
-            child: Text("Found " + totalPokemonFound.toString() + " pokemons."),
+            child: Text("Found $totalPokemonFound pokemons."),
           ),
         ),
       ),
@@ -45,8 +50,10 @@ class SearchResultText extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class SearchResultList extends StatelessWidget {
   SearchResultList({
+    super.key,
     required this.pageSize,
     required this.pageIndex,
     required this.pokemons,
@@ -58,31 +65,46 @@ class SearchResultList extends StatelessWidget {
   Function onSelectPokemon;
   int pageIndex;
   int pageSize;
-  Future<void> onPullUp(BuildContext context) async {
-    final bloc = BlocProvider.of<SearchBloc>(context);
+
+  Future<void> _onPullUp(SearchBloc bloc) async {
     bloc.add(CheckIfNeedMoreDataEvent(index: pageIndex + 1));
+  }
+
+  Future<void> _onPullDown(SearchBloc bloc) async {
+    bloc.pageNumber = 0;
+    bloc.pokemonTags = [];
+    bloc.add(LoadedPageEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<SearchBloc>(context);
-    List<Widget> widgets = bloc.pokemonTags.map((p) {
+    List<Widget> widgets = bloc.pokemonTags.map((pokemon) {
       return PokemonCard(
-        pokemonTag: p,
+        pokemonTag: pokemon,
         onSelectPokemon: onSelectPokemon,
-        isSelected: selectedPokemon.contains(p),
+        isSelected: selectedPokemon.contains(pokemon),
       );
     }).toList();
+
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-        ),
+      child: RefreshLoadmore(
+        onRefresh: () => _onPullDown(bloc),
+        onLoadmore: () => _onPullUp(bloc),
+        isLastPage: false,
         child: Container(
-          child: GridView.count(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+          ),
+          child: AlignedGridView.count(
+            shrinkWrap: true,
+            itemCount: widgets.length,
+            physics: const ScrollPhysics(),
             crossAxisCount: 2,
-            children: widgets,
+            itemBuilder: (context, index) {
+              return widgets.isEmpty ? Container() : widgets[index];
+            },
           ),
         ),
       ),
@@ -90,8 +112,10 @@ class SearchResultList extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class SelectedPolemonsBar extends StatelessWidget {
   SelectedPolemonsBar({
+    super.key,
     required this.pokemons,
     required this.onAddTeam,
   });
@@ -100,15 +124,15 @@ class SelectedPolemonsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = pokemons
-        .map((p) => PokemonIcon(
-              pokemonTag: p,
+        .map((pokemonTag) => PokemonIcon(
+              pokemonTag: pokemonTag,
             ))
         .toList();
     return Row(
       children: [
         Expanded(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Container(
@@ -127,7 +151,7 @@ class SelectedPolemonsBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -144,23 +168,27 @@ class SelectedPolemonsBar extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class FormTeamButton extends StatelessWidget {
   FormTeamButton({
+    super.key,
     required this.onAddTeam,
   });
   Function onAddTeam;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-        ),
-        child: TextButton(
-          child: const Text('Create Team'),
-          onPressed: () => onAddTeam(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextButton(
+            child: const Text('Create Team'),
+            onPressed: () => onAddTeam(),
+          ),
         ),
       ),
     );
@@ -168,14 +196,8 @@ class FormTeamButton extends StatelessWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<PokemonTag> _teamPokemons = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  List<PokemonTag> _pokemons = [];
+  final List<PokemonTag> _teamPokemons = [];
+  final List<PokemonTag> _pokemons = [];
   void _selectPokemon(PokemonTag pokemonTag) {
     setState(() {
       if (_teamPokemons.length >= 6) {
@@ -187,25 +209,34 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
-  Widget _buildPokemonResult(BuildContext context) {
-    final bloc = BlocProvider.of<SearchBloc>(context);
+  Widget _buildPokemonResult(SearchBloc bloc, bool isLoading) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        child: Column(children: [
-          SearchResultText(totalPokemonFound: bloc.pokemonTags.length),
-          SearchResultList(
-            pageSize: bloc.pageSize,
-            pageIndex: bloc.pageNumber,
-            pokemons: _pokemons,
-            onSelectPokemon: _selectPokemon,
-            selectedPokemon: _teamPokemons,
-          ),
-          SelectedPolemonsBar(
-            pokemons: _teamPokemons,
-            onAddTeam: widget.onAddTeam,
-          ),
-        ]),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        child: Column(
+          children: [
+            SearchResultText(totalPokemonFound: bloc.pokemonTags.length),
+            SearchResultList(
+              pageSize: bloc.pageSize,
+              pageIndex: bloc.pageNumber,
+              pokemons: _pokemons,
+              onSelectPokemon: _selectPokemon,
+              selectedPokemon: _teamPokemons,
+            ),
+            isLoading
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Container(),
+            SelectedPolemonsBar(
+              pokemons: _teamPokemons,
+              onAddTeam: widget.onAddTeam,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -244,22 +275,24 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFC4ECFA),
+      color: const Color(0xFFC4ECFA),
       child: BlocProvider(
-        create: (context) => SearchBloc()..add(LoadPageEvent()),
+        create: (context) => SearchBloc()..add(LoadedPageEvent()),
         child: BlocBuilder<SearchBloc, SearchState>(
           builder: (context, state) {
+            var bloc = BlocProvider.of<SearchBloc>(context);
+
             if (state is LoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return _buildPokemonResult(bloc, true);
             } else if (state is LoadedState) {
-              return _buildPokemonResult(context);
+              return _buildPokemonResult(bloc, false);
             } else if (state is ErrorState) {
               return errorDialog(
                 size: 20,
                 onPressed: () {
-                  BlocProvider.of<SearchBloc>(context)
+                  bloc
                     ..pageNumber = 0
-                    ..add(LoadPageEvent());
+                    ..add(LoadedPageEvent());
                 },
               );
             } else {

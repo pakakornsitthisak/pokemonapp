@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:skinxtest/constants/api.dart';
 import 'package:skinxtest/models/pokemon.dart';
-import 'package:skinxtest/models/pokemon_tag.dart';
-import 'package:skinxtest/pages/pokemon_detail_page.dart';
 
+// ignore: must_be_immutable
 class AnimatedPokemonImageCard extends StatefulWidget {
   AnimatedPokemonImageCard({
+    super.key,
     required this.pokemon,
   });
   Pokemon pokemon;
@@ -23,7 +22,7 @@ class _AnimatedPokemonImageCardState extends State<AnimatedPokemonImageCard> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
       setState(() => _index++);
     });
   }

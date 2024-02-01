@@ -1,17 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skinxtest/bloc/search_event.dart';
 import 'package:skinxtest/bloc/search_state.dart';
+import 'package:skinxtest/bloc/search_event.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 import 'package:skinxtest/service/pokemon_service.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   int pageNumber = 0;
-  final int pageSize = 10000;
+  final int pageSize = 10;
   List<PokemonTag> pokemonTags = [];
-  final int nextPageTrigger = 3;
 
   SearchBloc() : super(InitialState()) {
-    on<LoadPageEvent>((event, emit) async {
+    on<LoadedPageEvent>((event, emit) async {
       emit(LoadingState());
       try {
         List<PokemonTag> result =
@@ -26,8 +25,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     on<CheckIfNeedMoreDataEvent>((event, emit) async {
       emit(LoadingState());
-      if (pokemonTags.length >= pokemonTags.length - nextPageTrigger) {
-        add(LoadPageEvent());
+      if (pokemonTags.length >= pokemonTags.length - 1) {
+        add(LoadedPageEvent());
       }
     });
   }

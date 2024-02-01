@@ -1,5 +1,5 @@
-import 'package:skinxtest/api/api.dart';
 import 'package:skinxtest/constants/api.dart';
+import 'package:skinxtest/service/intercepter.dart';
 import 'package:skinxtest/models/pokemon.dart';
 import 'package:skinxtest/models/pokemon_tag.dart';
 

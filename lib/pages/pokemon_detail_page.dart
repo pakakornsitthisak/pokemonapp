@@ -6,11 +6,11 @@ import 'package:skinxtest/widgets/animated_pokemon_image_card.dart';
 
 // ignore: must_be_immutable
 class PokemonName extends StatelessWidget {
-  PokemonName({
+  const PokemonName({
     super.key,
     required this.name,
   });
-  String name;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,7 +21,7 @@ class PokemonName extends StatelessWidget {
             fit: BoxFit.fitWidth,
             child: Text(
               name,
-              style: const TextStyle(fontSize: 40),
+              style: TextStyle(fontSize: 40),
             ),
           ),
         ],
@@ -32,11 +32,11 @@ class PokemonName extends StatelessWidget {
 
 // ignore: must_be_immutable
 class PokemonDetail extends StatelessWidget {
-  PokemonDetail({
+  const PokemonDetail({
     super.key,
     required this.pokemon,
   });
-  Pokemon pokemon;
+  final Pokemon pokemon;
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +52,12 @@ class PokemonDetail extends StatelessWidget {
             children: [
               Text(
                 e.key,
-                style: TextStyle(fontSize: 25),
+                style: const TextStyle(fontSize: 25),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 e.value.toString(),
-                style: TextStyle(fontSize: 25),
+                style: const TextStyle(fontSize: 25),
               )
             ],
           ),
@@ -65,11 +65,9 @@ class PokemonDetail extends StatelessWidget {
         .toList();
 
     return Padding(
-      padding: EdgeInsets.all(10),
-      child: Container(
-        child: Column(
-          children: widgets,
-        ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: widgets,
       ),
     );
   }
@@ -77,22 +75,17 @@ class PokemonDetail extends StatelessWidget {
 
 // ignore: must_be_immutable
 class PokemonDetailPage extends StatefulWidget {
-  PokemonDetailPage({
+  const PokemonDetailPage({
     super.key,
     required this.pokemon,
   });
-  PokemonTag pokemon;
+  final PokemonTag pokemon;
 
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
 }
 
 class _PokemonDetailPageState extends State<PokemonDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   _getData() async {
     return (await PokemonService().getPokemon(widget.pokemon.name))!;
   }
@@ -111,9 +104,9 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
               if (snapshot.hasData) {
                 return Container(
                   width: double.infinity,
-                  color: Color(0xFFC4ECFA),
+                  color: const Color(0xFFC4ECFA),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Column(
                       children: [
                         AnimatedPokemonImageCard(pokemon: snapshot.data),
